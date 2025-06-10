@@ -1,12 +1,7 @@
-
-var isOpenedModal = false;//inverter
-var cnaeInfo = [];
-
+//import $ from 'jquery';
 window.onkeydown = (event) => {
     if (event.keyCode === 13) {
-        if (getInputCEP().value.length === 14) {
-            searchCep();
-        }
+        searchCep();
     }
 }
 
@@ -14,15 +9,33 @@ window.onkeydown = (event) => {
 async function searchCep() {
     let infosField = document.getElementById("info");
 
-    infosField.style.display = "flex";
-
     if (getCep()) {
-        let infos = await getInformation(getCep());//retorno da API
-        console.log(infos)
 
-        cnaeInfo = infos.data.cnaes_secundarios;
+        let infos = null;
+        const unFormattedCEP = getCep().replace("-", "");
 
-        let formattedInfo = `
+        if (unFormattedCEP.length !== 8) {
+            toggleErrorModal("O CEP deve possuir 8 números ou atender ao seguinte formato: 00000-000");
+            return;
+        }
+
+        try {
+            openLoading();
+            infos = await getInformation(unFormattedCEP);
+            closeLoading();
+        } catch (e) {
+            toggleErrorModal("Nenhuma informação para o CEP foi encontrada! Verifique se o CEP está correto e tente novamente.");
+            return;
+        }
+
+        if (infos.data.erro) {
+            toggleErrorModal("Erro na consulta, CEP inválido ou serviço indisponivel.");
+            return;
+        }
+
+        infosField.style.display = "flex";
+
+        /*let formattedInfo = `
         <div class="sessaoInfo">
             <b>CNPJ:</b> ${infos.data.cnpj}
         </div>
@@ -44,10 +57,32 @@ async function searchCep() {
         <div class="sessaoInfo">
             <b>CNAEs:</b> <a href="#" onclick="showDetailCnae()"> Mais informações</a>
         </div>
-        `
+        `*/
+        const { logradouro, bairro, localidade, uf } = infos.data;
 
-        infosField.innerHTML = formattedInfo;
+        if (!logradouro && !bairro && !localidade && !uf) {
+            return;
+        }
+
+        setMapLocation({ logradouro, bairro, localidade, uf })
+        //infosField.innerHTML = formattedInfo;
     }
+}
+
+function setMapLocation(params) {
+    let mapSearch = '';
+
+    if (params) {
+        for (const key of Object.keys(params)) {
+            mapSearch += `${params[key].replaceAll(" ", "+")}+`;
+        }
+    }
+
+    if (!mapSearch) {
+        alert('Endereço vazio')
+    }
+
+    $("#map").attr("src", `https://www.google.com/maps?q=${mapSearch}&z=20&output=embed`);
 }
 
 function getCep() {
@@ -72,4 +107,43 @@ function formatNoValue(value) {
     return value === true ? 'Sim' : value;
 }
 
+function toggleErrorModal(description) {
 
+    const isModalOpened = $("#error_modal").css("display") === "block";
+    const toggle = isModalOpened ? "none" : "block";
+
+    if (description) {
+        $("#error_desc").text(description);
+    }
+
+    if (toggle === "none") {
+        const hasOpened = $("#error_modal").hasClass('opened');
+
+        $("#error_modal").removeClass("opened");
+
+        setTimeout(() => {
+            $("#error_modal").css("display", toggle);
+            $("#overflow").css("display", toggle);
+        }, 180);
+
+    } else {
+        $("#error_modal").css("display", toggle);
+        $("#overflow").css("display", toggle);
+
+        setTimeout(() => {
+            $("#error_modal").addClass("opened");
+        }, 50);
+
+    }
+
+}
+
+function openLoading() {
+    $("#loading_content").css("display", "flex");
+    $("#overflow").css("display", "block");
+}
+
+function closeLoading() {
+    $("#loading_content").css("display", "none");
+    $("#overflow").css("display", "none");
+}
