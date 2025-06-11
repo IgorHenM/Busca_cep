@@ -4,13 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script 
+        src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
-    <title>Busca CNPJ</title>
+    <title>Busca CEP</title>
 </head>
 
 <body>
+    <div class="modal_overflow" id="overflow" style="display: none;">
+        <div class="loading" id="loading_content" style="display: none;">
+            <img src="images/loading-svgrepo-com.svg" class="loading_icon">
+            <p class="loading_desc">Carregando...</p>
+        </div>
+        <div class="modal_error" id="error_modal" style="display: none;">
+            <div class="header">
+                <div class="icon">
+                    <p class="error_icon">!</p>
+                </div>
+                <h4 class="error_title">Erro</h4>
+            </div>
+            <p class="error_desciption" id="error_desc"></p>
+            <div class="buttons">
+                <button onclick="toggleErrorModal()" class="btn_close">Fechar</button>
+            </div>
+        </div>
+    </div>
     <div class="form">
         <h1 class="titulo">Busque Informações de um CEP:</h1>
         <div class="interact">
@@ -18,6 +40,9 @@
             <input class="cep" type="text" name="cep" id="cep_id">
             <button class="search" onclick="searchCep()" title="Buscar - Enter">Buscar</button>
         </div>
+    </div>
+    <div class="componente_mapa">
+        <iframe id="map" class="map" src="https://www.google.com/maps?q=Brasilia&z=10&output=embed" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
     <div id="info" style="display: none;">
         
