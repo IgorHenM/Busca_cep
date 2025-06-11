@@ -5,6 +5,10 @@
 
 }
 
+:root {
+    --border-rad: 20px;
+}
+
 * {
     margin: 0;
 }
@@ -46,7 +50,7 @@ html {
     background-color: #d9d9d9;
     width: 500px;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: var(--border-rad);
     transition: 1s ease;
     text-align: left;
 }
@@ -64,7 +68,7 @@ label {
     margin-left: 10px;
     background-color: rgb(0, 0, 109);
     color: #ffffff;
-    border-radius: 5px;
+    border-radius: var(--border-rad);
     width: 75px;
     height: 30px;
     font-size: 17px;
@@ -77,7 +81,7 @@ label {
     border: 1px solid #000000;
     outline: none;
     height: 25px;
-    border-radius: 5px;
+    border-radius: var(--border-rad);
 }
 
 .cep:focus {
@@ -111,10 +115,9 @@ label {
     justify-content: center;
 
     .map {
-        border: 1px solid rgb(0, 0, 109);
-        box-shadow: 0px 0px 10px;
+        border: 1px solid rgb(0, 0, 0);
         height: 25vh;
-        border-radius: 5px;
+        border-radius: var(--border-rad);
         margin: 0;
     }
 }
@@ -153,7 +156,6 @@ label {
         left: 50%;
         background-color: #ffffff;
         width: 40vw;
-        /*tem que ir pra 40vw*/
         height: 15vh;
         padding: 2%;
         border-radius: 5px;

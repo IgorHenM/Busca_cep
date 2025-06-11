@@ -35,7 +35,7 @@ async function searchCep() {
 
         infosField.style.display = "flex";
 
-        /*let formattedInfo = `
+        let formattedInfo = `
         <div class="sessaoInfo">
             <b>CNPJ:</b> ${infos.data.cnpj}
         </div>
@@ -57,7 +57,7 @@ async function searchCep() {
         <div class="sessaoInfo">
             <b>CNAEs:</b> <a href="#" onclick="showDetailCnae()"> Mais informações</a>
         </div>
-        `*/
+        `
         const { logradouro, bairro, localidade, uf } = infos.data;
 
         if (!logradouro && !bairro && !localidade && !uf) {
@@ -65,7 +65,7 @@ async function searchCep() {
         }
 
         setMapLocation({ logradouro, bairro, localidade, uf })
-        //infosField.innerHTML = formattedInfo;
+        infosField.innerHTML = formattedInfo;
     }
 }
 
