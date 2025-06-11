@@ -22,29 +22,36 @@ async function searchCep() {
 
         cnaeInfo = infos.data.cnaes_secundarios;
 
-        let formattedInfo = `
-        <div class="sessaoInfo">
-            <b>CNPJ:</b> ${infos.data.cnpj}
-        </div>
-        <div class="sessaoInfo">
-            <b>RAZÃO SOCIAL:</b> ${infos.data.razao_social}
-        </div>
-        <div class="sessaoInfo">
-            <b>CAPITAL SOCIAL:</b> ${formatBRL(infos.data.capital_social)}
-        </div>
-        <div class="sessaoInfo">
-            <b>TELEFONE 1:</b> ${infos.data.ddd_telefone_1}
-        </div>
-        <div class="sessaoInfo">
-            <b>TELEFONE 2:</b> ${formatNoValue(infos.data.ddd_telefone_2)}
-        </div>
-        <div class="sessaoInfo">
-            <b>OPÇÃO PELO MEI:</b> ${formatNoValue(infos.data.opcao_pelo_mei)}
-        </div>
-        <div class="sessaoInfo">
-            <b>CNAEs:</b> <a href="#" onclick="showDetailCnae()"> Mais informações</a>
-        </div>
-        `
+        let formattedInfo =
+         `
+            <div class="sessaoInfo">
+                <b>CEP:</b> ${infos.data.cep}
+            </div>
+            <div class="sessaoInfo">
+                <b>LOGRADOURO:</b> ${infos.data.logradouro}
+            </div>
+            <div class="sessaoInfo">
+                <b>COMPLEMENTO:</b> ${infos.data.complemento}
+            </div>
+            <div class="sessaoInfo">
+                <b>BAIRRO:</b> ${infos.data.bairro}
+            </div>
+            <div class="sessaoInfo">
+                <b>LOCALIDADE:</b> ${infos.data.localidade}
+            </div>
+            <div class="sessaoInfo">
+                <b>UF:</b> ${infos.data.uf}
+            </div>
+            <div class="sessaoInfo">
+                <b>ESTADO:</b> ${infos.data.estado}
+            </div>
+            <div class="sessaoInfo">
+                <b>REGIÃO:</b> ${infos.data.regiao}
+            </div>
+            <div class="sessaoInfo">
+                <b>DDD:</b> ${infos.data.ddd}
+            </div>
+       `
 
         infosField.innerHTML = formattedInfo;
     }
