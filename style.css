@@ -250,7 +250,7 @@ label {
 
 @media screen and (max-width: 1920px) {
     .map {
-        width: 35vw;
+        width: 27vw;
     }
 
     .loading_icon {
